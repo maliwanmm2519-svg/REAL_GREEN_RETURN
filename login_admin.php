@@ -1,0 +1,56 @@
+<?php
+session_start();
+include('config.php');
+
+if (isset($_POST['login'])) {
+    if ($_POST['user'] === 'nongvear12') {
+        $stmt = $conn->prepare("SELECT * FROM user WHERE user = :u AND password = :p");
+        $stmt->execute([
+            ':u' => $_POST['user'],
+            ':p' => $_POST['password']
+        ]);
+        $row = $stmt->fetch();
+
+        if ($row) {
+            $_SESSION['admin_user'] = $row['user'];
+            header("Location: index_admin.php");
+            exit();
+        }
+    }
+    echo "<script>alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');</script>";
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link href="bootstrap-6.0.0-alpha.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{
+            background-image: url('image/pexels-ha-phan-825340680-20064332.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-dark d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow bg-secondary text-white" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-3">ADMIN⚙SYSTEM</h2>
+        <form action="" method="POST">
+            <div class="mb-3">
+                <label class="form-label"></label>
+                <input type="text" class="form-control" name="user" placeholder="กรอกข้อมูล" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"></label>
+                <input type="password" class="form-control" name="password" placeholder="กรอกรหัสผ่าน" required>
+            </div>
+            <button type="submit" name="login" class="btn btn-solid theme-primary w-100 fw-bold">เข้าสู่ระบบ</button>
+        </form>
+    </div>
+</body>
+</html>

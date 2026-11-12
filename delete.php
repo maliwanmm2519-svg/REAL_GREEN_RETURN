@@ -1,0 +1,7 @@
+<?php
+include("config.php");
+$sql="delete from user where id=
+'".$_GET['id']."'";
+$res=$conn->exec($sql);
+header("Location:add_user.php")
+?>

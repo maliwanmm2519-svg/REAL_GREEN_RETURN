@@ -1,0 +1,59 @@
+<?php include("config.php");?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST LOGIN</title>
+    <link href="bootstrap-6.0.0-alpha.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+       body {
+        background-image: url('image/pexels-peterdanthy-33034448.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh
+       }
+    </style>
+
+    
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container" style="max-width: 500px;">
+        <div class="row justify-content center">
+            <div class="col-md-4">
+               <div class="card shadow p-4">
+
+            <center><h1>🌳เข้าสู่ระบบ🍵</h1></center>
+                <br>
+                <form action="check_login.php" method="POST">
+                    <div class="mb-3">
+                        <label for="user" class="form-label">USER</label>
+                        <input type="text" class="form-control" name="user" id="user"  required> 
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">PASSWORD</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                   <br>
+                   <center><button type="submit" class="btn-solid theme-primary w-50">ยืนยัน</button></center>
+                    <br>
+                   <center><a href="add_user.php" class="btn-outline theme-secondary w-50">สม้ครสมาชิก</a></center>
+
+               </div>
+
+
+    
+</body>
+</html>
+

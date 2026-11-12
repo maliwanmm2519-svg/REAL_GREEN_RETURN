@@ -1,0 +1,101 @@
+
+<?php include("config.php");?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แก้ไขข้อมูล</title>
+    <link href="bootstrap-6.0.0-alpha.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    label {
+        color: #ffffff !important; /* บังคับให้ป้ายชื่อช่องกรอกข้อมูลทุกตัวเป็นสีขาว */
+        font-weight: bold;         /* เพิ่มตัวหนาให้อ่านง่ายขึ้น */
+    }
+
+    .card {
+        background-color: #1d1d1d8a !important;
+        border: 1px solid #64646496 !important;
+        color: #fffff !important;
+    }
+
+    body{
+            background-image: url('https://images.pexels.com/photos/359994/pexels-photo-359994.jpeg?cs=srgb&dl=pexels-chevanon-359994.jpg&fm=jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br>
+    <div class="container">
+        
+        <br>
+        <center><h1 style="color: #ffffff; font-size: 50px;">แก้ไขข้อมูล</h1></center>
+        <br>
+
+        <?php
+        $sql="select*from user where id='".$_GET['id']."'";
+        $res=$conn->query($sql);
+        $arr=$res->fetch();
+        ?>
+    
+        <form action="update_user.php?id=<?php echo $arr['id'];?>" method="POST" name="add_user">
+        <br>
+         <div class="card shadow p-4">
+            <div class="mb-9 row">
+            <label for="user" class="sm:col-2  col-form-label">User</label>
+                <div class="sm:col-8">
+                <input type="text" class="form-control" name="user" value="<?php echo $arr['user'];?>">
+                </div>
+            </div>
+            <br>
+
+            <div class="mb-9 row">
+             <label for="password" class="sm:col-2 col-form-label">รหัส</label>
+                <div class="sm:col-8">
+                <input type="password" class="form-control" name="password" value="<?php echo $arr['password'];?>">
+                </div>
+            </div>
+            <br>
+
+
+            <div class="mb-9 row">
+             <label for="name" class="sm:col-2 col-form-label">ชื่อ-สกุล</label>
+                <div class="sm:col-8">
+                <input type="text" class="form-control" name="name" value="<?php echo $arr['name'];?>">
+                </div>
+            </div>
+            <br>
+
+
+            <div class="mb-9 row">
+            <label for="phone" class="sm:col-2 col-form-label">เบอร์โทร</label>
+                <div class="sm:col-8">
+                <input type="text" class="form-control" name="phone" value="<?php echo $arr['phone'];?>">
+                </div>
+            </div>
+    
+            <br>
+
+            <div class="mb-9 row">
+                <label for="submit" class="sm:col-2 col-form-label"></label>
+                <div class="sm:col-8">
+                <input type="submit" name="submit" class="btn-solid sm theme-primary" value="บันทึก">
+                <input type="reset" name="reset" class="btn-solid sm theme-warning" value="ล้าง">
+                <a href="#" class="btn-solid sm theme-danger">ยกเลิก</a>
+                </div>
+            </div>
+    </form>
+  
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?php include("config.php");
+ session_start();
+ $user = $_POST['user'];
+ $password = $_POST['password'];
+
+ $sql = ("SELECT * FROM user WHERE user = '$user' AND password = '$password'");
+ $res = $conn->query($sql);
+ $row = $res->fetch(PDO::FETCH_ASSOC);
+
+if($row){
+$_SESSION['user'] = $row['user'];
+$_SESSION['id'] = $row['id'];
+header("Location:content.php");
+exit();}
+
+else {
+echo "<script>
+alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!');
+window.location='login.php';
+</script>";
+exit();}
+
+?>
+
+

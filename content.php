@@ -1,0 +1,108 @@
+<?php
+session_start();
+include('config.php');
+$row = [];
+if(isset($_SESSION['id'])){
+    $id = $_SESSION['id'];
+    
+    $sql = "SELECT * FROM user WHERE id = '$id'";
+    $res = $conn->query($sql);
+    if($res){
+        $row = $res->fetch(PDO::FETCH_ASSOC);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข้อมูลสมาชิกของคุณ</title>
+    <link href="bootstrap-6.0.0-alpha.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('image/pexels-peterdanthy-33034448.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            padding-top: 60px;
+        }
+        .profile-card {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .point-box {
+            background: #ffc107;
+            color: #000000;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 38px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+           
+            <div class="profile-card">
+                <h2 class="text-center" style="font-size: 40px; font-weight: bold;">TEST🌳GREEN</h2>
+                <p class="text-center text-muted">ข้อมูลคะแนนสะสมของคุณ</p>
+                <hr style="border-color: #444;">
+
+
+                <p class="mb-1 text-center" style="font-size: 16px; color: #ddd;">คะแนนสะสมปัจจุบัน</p>
+                <div class="point-box">
+                    <?php echo htmlspecialchars($row['point'] ?? '0'); ?> <span style="font-size: 20px;">คะแนน</span>
+                </div>
+
+
+                <div class="mt-4 p-3 rounded" style="background: rgba(255,255,255,0.05);">
+                    <div class="row mb-2">
+                        <div class="col-4 text-muted">User ID :</div>
+                        <div class="col-8"><strong><?php echo htmlspecialchars($row['user']); ?></strong></div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-4 text-muted">ชื่อ-สกุล :</div>
+                        <div class="col-8" style="color: #ffffff;"><?php echo htmlspecialchars($row['name'] ?? '-'); ?></div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-4 text-muted">เบอร์โทร :</div>
+                        <div class="col-8" style="color: #ffffff;"><?php echo htmlspecialchars($row['phone'] ?? '-'); ?></div>
+                    </div>
+                    
+                    <div class="row mb-0">
+                        <div class="col-4 text-muted">วันที่อัปเดต :</div>
+                        <div class="col-8" style="font-size: 14px; color: #aaa;"><?php echo htmlspecialchars($row['date'] ?? '-'); ?></div>
+                    </div>
+                </div>
+
+
+                <br><br>
+                <a href="logout.php" class="btn-outline theme-danger w-100" style="font-weight: bold;">ออกจากระบบ</a>
+                <br> <br> 
+                <a href="edit_user.php?id=<?php echo $row['id']; ?>" class="btn-outline theme-warning w-100" style="font-weight: bold;">แก้ไขข้อมูลสมาชิก</a>
+                
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+

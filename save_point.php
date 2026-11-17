@@ -2,11 +2,12 @@
 include("config.php");
 session_start();
 
-$id = $_POST['id'];
-$amount = intval($_POST['amount']);
-$action = $_POST['action']; // รับค่าว่าเป็น add หรือ deduct
+// 1. รับไอดีจาก URL (GET) และจำนวนแต้มกับปุ่มกดจากฟอร์ม (POST)
+$id = $_GET['id'];
+$point = intval($_POST['point']);
+$action = $_POST['action']; 
 
-// 1. ดึงข้อมูลแต้มปัจจุบันของสมาชิกคนนั้น
+// 2. ดึงข้อมูลแต้มปัจจุบันของสมาชิกคนนั้น
 $sql_check = "SELECT * FROM user WHERE id = ?";
 $stmt_check = $conn->prepare($sql_check);
 $stmt_check->execute([$id]);
@@ -17,31 +18,31 @@ if($user) {
 
     if($action == 'add') {
         // กรณีเพิ่มแต้ม
-        $new_point = $current_point + $amount;
+        $new_point = $current_point + $point;
         $sql_update = "UPDATE user SET point = ?, date = NOW() WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
         $stmt_update->execute([$new_point, $id]);
 
         echo "<script>
-            alert('เพิ่มแต้มสำเร็จ! บวกเพิ่ม $amount คะแนน (ยอดรวม: $new_point คะแนน)');
+            alert('เพิ่มแต้มสำเร็จ! บวกเพิ่ม $point คะแนน (ยอดรวม: $new_point คะแนน)');
             window.location='manage_point.php';
         </script>";
     } 
     else if($action == 'deduct') {
         // กรณีหักแต้ม (เช็คว่าแต้มพอให้หักไหม)
-        if($current_point >= $amount) {
-            $new_point = $current_point - $amount;
+        if($current_point >= $point) {
+            $new_point = $current_point - $point;
             $sql_update = "UPDATE user SET point = ?, date = NOW() WHERE id = ?";
             $stmt_update = $conn->prepare($sql_update);
             $stmt_update->execute([$new_point, $id]);
 
             echo "<script>
-                alert('หักแต้มสำเร็จ! หักออก $amount คะแนน (เหลือ: $new_point คะแนน)');
+                alert('หักแต้มสำเร็จ! หักออก $point คะแนน (เหลือ: $new_point คะแนน)');
                 window.location='manage_point.php';
             </script>";
         } else {
             echo "<script>
-                alert('แต้มสะสมไม่เพียงพอ! (มีอยู่ $current_point คะแนน แต่ต้องการหัก $amount คะแนน)');
+                alert('แต้มสะสมไม่เพียงพอ! (มีอยู่ $current_point คะแนน แต่ต้องการหัก $point คะแนน)');
                 window.location='manage_point.php';
             </script>";
         }
